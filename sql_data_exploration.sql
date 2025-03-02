@@ -208,3 +208,14 @@ CREATE VIEW correlation_cases_gdp AS
 	GROUP BY
 		deaths.location,
 		gdp_per_capita;
+
+
+CREATE VIEW global_stats AS
+	SELECT
+		SUM(CAST(new_cases AS float)) AS total_cases,
+		SUM(CAST(new_deaths AS float)) AS total_deaths,
+		ROUND(SUM(CAST(new_deaths AS float))/ SUM(CAST(new_cases AS float)) * 100, 2) AS global_death_percentage
+	FROM
+		CovidDeaths
+	WHERE
+		continent != ''
